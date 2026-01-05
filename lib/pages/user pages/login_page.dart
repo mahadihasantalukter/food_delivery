@@ -97,7 +97,12 @@ class _LoginPageState extends State<LoginPage> {
                   children: [
                     TextButton(
                       style: TextButton.styleFrom(
-                        backgroundColor: Colors.white.withOpacity(0.3),
+                        backgroundColor: const Color.fromARGB(
+                          255,
+                          214,
+                          105,
+                          3,
+                        ).withOpacity(0.3),
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(24),
                         ),
@@ -108,7 +113,7 @@ class _LoginPageState extends State<LoginPage> {
                       child: Text(
                         'Login',
                         style: TextStyle(
-                          color: const Color.fromARGB(255, 247, 230, 2),
+                          color: const Color.fromARGB(255, 255, 255, 255),
                           fontSize: 20,
                         ),
                       ),
@@ -121,9 +126,9 @@ class _LoginPageState extends State<LoginPage> {
                   children: [
                     Text(
                       'Don\'t have an account?>',
-                      style: TextStyle(color: Colors.black),
+                      style: TextStyle(color: Colors.white, fontSize: 20),
                     ),
-                    const SizedBox(width: 18),
+                    const SizedBox(width: 15),
                     InkWell(
                       onTap: () {
                         Get.offAll(RegisterPage());
@@ -131,9 +136,9 @@ class _LoginPageState extends State<LoginPage> {
                       child: Text(
                         'Sign Up',
                         style: TextStyle(
-                          color: const Color.fromARGB(255, 8, 148, 3),
+                          color: const Color.fromARGB(118, 248, 247, 246),
                           fontWeight: FontWeight.bold,
-                          fontSize: 16,
+                          fontSize: 20,
                         ),
                       ),
                     ),
@@ -164,7 +169,7 @@ class _LoginPageState extends State<LoginPage> {
         if (data['status'] == 'success') {
           SharedPreferences prefs = await SharedPreferences.getInstance();
           await prefs.setString("user_email", data['user']['email']);
-          Get.offAll(Homepage(username: data['user']['email']));
+          Get.offAll(Homepage(username: data['user']['name']));
         } else {
           print(data['message']);
         }
