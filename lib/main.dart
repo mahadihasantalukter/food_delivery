@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:food_delivery/pages/admin_pages/admin_login_page.dart';
 import 'package:food_delivery/wrapper.dart';
 import 'package:get/get_navigation/src/root/get_material_app.dart';
 
@@ -15,9 +16,11 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'Food Delivery App',
       theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+        colorScheme: ColorScheme.fromSeed(
+          seedColor: const Color.fromARGB(255, 3, 194, 241),
+        ),
       ),
-      home: Wrapper(),
+      home: AdminLoginPage(),
     );
   }
 }
