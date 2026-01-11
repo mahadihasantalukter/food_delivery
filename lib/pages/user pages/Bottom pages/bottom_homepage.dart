@@ -10,8 +10,6 @@ class BottomHomepage extends StatefulWidget {
 class _BottomHomepageState extends State<BottomHomepage> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Center(child: Text("Homepage")),
-    );
+    return Scaffold(body: Center(child: Text("Homepage dart")));
   }
 }

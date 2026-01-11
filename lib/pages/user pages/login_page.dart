@@ -153,22 +153,26 @@ class _LoginPageState extends State<LoginPage> {
   }
 
   Future<void> login() async {
-    var url = Uri.parse('http://192.168.0.190/flutter/api/user_login_reg.php');
+    var url = Uri.parse('http://192.168.1.106/flutter/api/user_login_reg.php');
     try {
       var response = await http.post(
         url,
+        headers: {"Accept": "application/json"},
         body: {
           'action': 'login',
-          'email': emailController.text,
-          'password': passwordController.text,
+          'email': emailController.text.trim(),
+          'password': passwordController.text.trim(),
         },
       );
       if (response.statusCode == 200) {
         print("Response: ${response.body}");
+
         var data = jsonDecode(response.body);
+        print("User Data: ${data['user']}");
         if (data['status'] == 'success') {
           SharedPreferences prefs = await SharedPreferences.getInstance();
           await prefs.setString("user_email", data['user']['email']);
+          await prefs.setString("user_name", data['user']['name']);
           Get.offAll(Homepage(username: data['user']['name']));
         } else {
           print(data['message']);

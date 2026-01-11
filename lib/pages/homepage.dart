@@ -27,12 +27,18 @@ class _HomepageState extends State<Homepage> {
       appBar: AppBar(
         title: Text("Welcome ${widget.username}"),
         centerTitle: true,
+        actions: [
+          IconButton(
+            onPressed: () {},
+            icon: Icon(Icons.notification_add_outlined),
+          ),
+        ],
       ),
       bottomNavigationBar: CurvedNavigationBar(
         backgroundColor: Colors.transparent,
         buttonBackgroundColor: Colors.blue,
         height: 60,
-
+        animationDuration: Duration(milliseconds: 200),
         index: cuttentTableIndex,
         onTap: (index) {
           setState(() {

@@ -12,12 +12,14 @@ class Wrapper extends StatefulWidget {
 
 class _WrapperState extends State<Wrapper> {
   bool isloading = true;
-  String? userEmail;
+  String? username;
+ 
 
   Future<void> checkLoginstatus() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     setState(() {
-      userEmail = prefs.getString("user_email");
+      username = prefs.getString("user_name");
+      
       isloading = false;
     });
   }
@@ -30,13 +32,9 @@ class _WrapperState extends State<Wrapper> {
 
   @override
   Widget build(BuildContext context) {
-    if(isloading){
-      return const Scaffold(
-        body: Center(
-          child: CircularProgressIndicator(),
-        ),
-      );
+    if (isloading) {
+      return const Scaffold(body: Center(child: CircularProgressIndicator()));
     }
-    return userEmail == null ? LoginPage() : Homepage(username: userEmail!);
-  } 
+    return username == null ? LoginPage() : Homepage(username: username!);
+  }
 }
