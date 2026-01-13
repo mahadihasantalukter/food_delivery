@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 
 class AdminHomepage extends StatefulWidget {
-  const AdminHomepage({super.key});
+  final String username;
+  const AdminHomepage({super.key, required this.username});
 
   @override
   State<AdminHomepage> createState() => _AdminHomepageState();
@@ -10,6 +11,6 @@ class AdminHomepage extends StatefulWidget {
 class _AdminHomepageState extends State<AdminHomepage> {
   @override
   Widget build(BuildContext context) {
-    return const Placeholder();
+    return Scaffold(body: Center(child: Text("Admin Homepage", style: TextStyle(fontSize: 32),)));
   }
 }

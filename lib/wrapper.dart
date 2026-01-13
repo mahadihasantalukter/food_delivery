@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:food_delivery/pages/admin_pages/admin_homepage.dart';
 import 'package:food_delivery/pages/homepage.dart';
 import 'package:food_delivery/pages/user%20pages/login_page.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -12,14 +13,15 @@ class Wrapper extends StatefulWidget {
 
 class _WrapperState extends State<Wrapper> {
   bool isloading = true;
-  String? username;
+  String? name;
+  String? role;
  
 
   Future<void> checkLoginstatus() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     setState(() {
-      username = prefs.getString("user_name");
-      
+      name = prefs.getString("name");
+      role = prefs.getString("role");
       isloading = false;
     });
   }
@@ -35,6 +37,12 @@ class _WrapperState extends State<Wrapper> {
     if (isloading) {
       return const Scaffold(body: Center(child: CircularProgressIndicator()));
     }
-    return username == null ? LoginPage() : Homepage(username: username!);
+    if( role == null){
+      return LoginPage();
+    }
+    if(role == 'admin'){
+      return AdminHomepage(username: name ?? "admin");
+    }
+    return Homepage(username: name ?? "user");
   }
 }

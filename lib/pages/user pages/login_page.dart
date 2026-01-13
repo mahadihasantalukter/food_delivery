@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:food_delivery/pages/admin_pages/admin_login_page.dart';
 import 'package:food_delivery/pages/homepage.dart';
 import 'package:food_delivery/pages/user%20pages/register_page.dart';
 import 'package:get/get.dart';
@@ -144,6 +145,40 @@ class _LoginPageState extends State<LoginPage> {
                     ),
                   ],
                 ),
+                SizedBox(height: 8),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      'Or',
+                      style: TextStyle(color: Colors.white, fontSize: 20),
+                    ),
+                  ],
+                ),
+                SizedBox(height: 8),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      'You are now an admin?>',
+                      style: TextStyle(color: Colors.white, fontSize: 20),
+                    ),
+                    const SizedBox(width: 5),
+                    InkWell(
+                      onTap: () {
+                        Get.offAll(AdminLoginPage());
+                      },
+                      child: Text(
+                        'Admin Login',
+                        style: TextStyle(
+                          color: const Color.fromARGB(118, 248, 247, 246),
+                          fontWeight: FontWeight.bold,
+                          fontSize: 20,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
               ],
             ),
           ),
@@ -153,7 +188,7 @@ class _LoginPageState extends State<LoginPage> {
   }
 
   Future<void> login() async {
-    var url = Uri.parse('http://192.168.1.106/flutter/api/user_login_reg.php');
+    var url = Uri.parse('http:/192.168.1.104/flutter/api/user_login_reg.php');
     try {
       var response = await http.post(
         url,
@@ -173,6 +208,8 @@ class _LoginPageState extends State<LoginPage> {
           SharedPreferences prefs = await SharedPreferences.getInstance();
           await prefs.setString("user_email", data['user']['email']);
           await prefs.setString("user_name", data['user']['name']);
+          await prefs.setString("role", 'user');
+
           Get.offAll(Homepage(username: data['user']['name']));
         } else {
           print(data['message']);

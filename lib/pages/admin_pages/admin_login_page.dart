@@ -5,6 +5,7 @@ import 'package:food_delivery/pages/admin_pages/admin_homepage.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:http/http.dart' as http;
+import 'package:shared_preferences/shared_preferences.dart';
 
 class AdminLoginPage extends StatefulWidget {
   const AdminLoginPage({super.key});
@@ -47,11 +48,11 @@ class _AdminLoginPageState extends State<AdminLoginPage> {
                 ),
                 SizedBox(height: 20),
                 TextField(
-                  controller: emailController,
+                  controller: nameController,
                   decoration: InputDecoration(
-                    hintText: "Email",
+                    hintText: "name",
                     hintStyle: TextStyle(color: Colors.white54),
-                    prefixIcon: Icon(Icons.email, color: Colors.white54),
+                    prefixIcon: Icon(Icons.person, color: Colors.white54),
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(10),
                       borderSide: BorderSide(color: Colors.white),
@@ -86,29 +87,12 @@ class _AdminLoginPageState extends State<AdminLoginPage> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     TextButton(
-                      onPressed: () {},
-                      child: Text(
-                        "Login",
-                        style: TextStyle(color: Colors.white, fontSize: 20),
-                      ),
-                    ),
-                    SizedBox(height: 16),
-                  ],
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text(
-                      "Don't have an account?",
-                      style: TextStyle(color: Colors.white, fontSize: 16),
-                    ),
-                    TextButton(
                       onPressed: () {
                         login();
                       },
                       child: Text(
-                        "Register",
-                        style: TextStyle(color: Colors.yellow, fontSize: 20),
+                        "Login",
+                        style: TextStyle(color: Colors.white, fontSize: 20),
                       ),
                     ),
                   ],
@@ -121,25 +105,30 @@ class _AdminLoginPageState extends State<AdminLoginPage> {
     );
   }
 
-  TextEditingController emailController = TextEditingController();
+  TextEditingController nameController = TextEditingController();
   TextEditingController phoneController = TextEditingController();
 
   Future<void> login() async {
-    var url = Uri.parse("");
+    var url = Uri.parse('http://192.168.1.104/flutter/api/admin_login_reg.php');
     try {
       var response = await http.post(
         url,
         body: {
           'action': 'login',
-          'email': emailController.text,
-          'password': phoneController.text,
+          'name': nameController.text.trim(),
+          'phone': phoneController.text.trim(),
         },
       );
+      print("Raw Server Output: ${response.body}");
       if (response.statusCode == 200) {
         print("Response: ${response.body}");
         var data = jsonDecode(response.body);
         if (data['status'] == 'success') {
-          Get.offAll(AdminHomepage());
+          SharedPreferences prefs = await SharedPreferences.getInstance();
+          await prefs.setString("user_name", data['user']['name']);
+          await prefs.setString("role", 'admin');
+
+          Get.offAll(AdminHomepage(username: data['user']['name']));
         } else {
           print(data['message']);
         }

@@ -26,8 +26,10 @@ class _HomepageState extends State<Homepage> {
     return Scaffold(
       appBar: AppBar(
         title: Text("Welcome ${widget.username}"),
-        centerTitle: true,
+
         actions: [
+          IconButton(onPressed: () {}, icon: Icon(Icons.search_outlined)),
+          SizedBox(width: 10),
           IconButton(
             onPressed: () {},
             icon: Icon(Icons.notification_add_outlined),
