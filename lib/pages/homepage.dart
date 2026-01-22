@@ -40,7 +40,7 @@ class _HomepageState extends State<Homepage> {
         backgroundColor: Colors.transparent,
         buttonBackgroundColor: Colors.blue,
         height: 60,
-        animationDuration: Duration(milliseconds: 200),
+        animationDuration: Duration(milliseconds: 400),
         index: cuttentTableIndex,
         onTap: (index) {
           setState(() {

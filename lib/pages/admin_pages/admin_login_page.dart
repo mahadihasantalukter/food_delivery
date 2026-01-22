@@ -83,6 +83,7 @@ class _AdminLoginPageState extends State<AdminLoginPage> {
                   style: TextStyle(color: Colors.white),
                 ),
                 SizedBox(height: 20),
+
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
@@ -109,7 +110,7 @@ class _AdminLoginPageState extends State<AdminLoginPage> {
   TextEditingController phoneController = TextEditingController();
 
   Future<void> login() async {
-    var url = Uri.parse('http://192.168.1.104/flutter/api/admin_login_reg.php');
+    var url = Uri.parse('http://192.168.1.116/flutter/api/admin_login_reg.php');
     try {
       var response = await http.post(
         url,
@@ -125,7 +126,12 @@ class _AdminLoginPageState extends State<AdminLoginPage> {
         var data = jsonDecode(response.body);
         if (data['status'] == 'success') {
           SharedPreferences prefs = await SharedPreferences.getInstance();
-          await prefs.setString("user_name", data['user']['name']);
+          print(data['user']['name']);
+          String userNameFromServer = data['user']['name'] ?? "No Name Found";
+          String userphoneFromServer = data['user']['name'] ?? "No Name Found";
+
+          await prefs.setString("user_name", userNameFromServer);
+          await prefs.setString("user_phone", userphoneFromServer);
           await prefs.setString("role", 'admin');
 
           Get.offAll(AdminHomepage(username: data['user']['name']));

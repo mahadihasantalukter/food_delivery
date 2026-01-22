@@ -15,13 +15,15 @@ class _WrapperState extends State<Wrapper> {
   bool isloading = true;
   String? name;
   String? role;
- 
 
   Future<void> checkLoginstatus() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
+    String? savedName = prefs.getString("user_name");
+    String? savedRole = prefs.getString("role");
+    
     setState(() {
-      name = prefs.getString("name");
-      role = prefs.getString("role");
+      name = savedName;
+      role = savedRole;
       isloading = false;
     });
   }
@@ -37,10 +39,10 @@ class _WrapperState extends State<Wrapper> {
     if (isloading) {
       return const Scaffold(body: Center(child: CircularProgressIndicator()));
     }
-    if( role == null){
+    if (role == null) {
       return LoginPage();
     }
-    if(role == 'admin'){
+    if (role == 'admin') {
       return AdminHomepage(username: name ?? "admin");
     }
     return Homepage(username: name ?? "user");
