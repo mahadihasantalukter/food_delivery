@@ -110,7 +110,7 @@ class _AdminLoginPageState extends State<AdminLoginPage> {
   TextEditingController phoneController = TextEditingController();
 
   Future<void> login() async {
-    var url = Uri.parse('http://192.168.1.116/flutter/api/admin_login_reg.php');
+    var url = Uri.parse('http://192.168.1.114/flutter/api/admin_login_reg.php');
     try {
       var response = await http.post(
         url,
