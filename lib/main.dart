@@ -16,7 +16,7 @@ class MyApp extends StatelessWidget {
       title: 'Food Delivery App',
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(
-          seedColor: const Color.fromARGB(255, 3, 194, 241),
+          seedColor: const Color.fromARGB(255, 237, 253, 5),
         ),
       ),
       home: Wrapper(),
