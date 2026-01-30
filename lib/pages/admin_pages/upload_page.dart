@@ -195,7 +195,7 @@ class _UploadPageState extends State<UploadPage> {
       );
       return;
     }
-    var uri = Uri.parse("http://192.168.1.105/flutter/api/uploads.php");
+    var uri = Uri.parse("http://192.168.1.113/flutter/api/uploads.php");
     var request = http.MultipartRequest('POST', uri);
     request.fields['name'] = _nameController.text;
     request.fields['description'] = _descriptionController.text;

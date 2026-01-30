@@ -188,7 +188,7 @@ class _LoginPageState extends State<LoginPage> {
   }
 
   Future<void> login() async {
-    var url = Uri.parse('http://192.168.1.106/flutter/api/user_login_reg.php');
+    var url = Uri.parse('http://192.168.1.113//flutter/api/user_login_reg.php');
     try {
       var response = await http.post(
         url,

@@ -15,12 +15,19 @@ class Homepage extends StatefulWidget {
 
 class _HomepageState extends State<Homepage> {
   int cuttentTableIndex = 0;
-  final List<Widget> tableNames = [
-    BottomHomepage(),
-    AddToCard(),
-    Profile(),
-    Setting(),
-  ];
+  late List<Widget> tableNames;
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    tableNames = [
+      BottomHomepage(username: widget.username),
+      AddToCard(),
+      Profile(),
+      Setting(),
+    ];
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
