@@ -22,7 +22,7 @@ class _HomepageState extends State<Homepage> {
     super.initState();
     tableNames = [
       BottomHomepage(username: widget.username),
-      AddToCard(),
+      AddToCard(username: widget.username,),
       Profile(),
       Setting(),
     ];

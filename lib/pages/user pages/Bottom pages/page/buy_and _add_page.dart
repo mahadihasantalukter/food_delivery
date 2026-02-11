@@ -1,23 +1,34 @@
 import 'package:flutter/material.dart';
 import 'package:food_delivery/pages/homepage.dart';
 import 'package:food_delivery/pages/user%20pages/Bottom%20pages/bottom_homepage.dart';
+import 'package:food_delivery/pages/user%20pages/Bottom%20pages/page/payment_method.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
+import 'package:http/http.dart' as http;
 
-class buyandaddpage extends StatelessWidget {
+class buyandaddpage extends StatefulWidget {
   final String username;
   final dynamic product;
   const buyandaddpage({super.key, this.product, required this.username});
 
   @override
+  State<buyandaddpage> createState() => _buyandaddpageState();
+}
+
+class _buyandaddpageState extends State<buyandaddpage> {
+  @override
   Widget build(BuildContext context) {
+    final TextEditingController _addressController = TextEditingController();
+    final TextEditingController _phoneController = TextEditingController();
+    final TextEditingController _trxController = TextEditingController();
+    String selectedMethod = "Bkash";
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        title: Text(product["name"]),
+        title: Text(widget.product["name"]),
         leading: IconButton(
           onPressed: () {
-            Get.offAll(Homepage(username: username));
+            Get.offAll(Homepage(username: widget.username));
           },
           icon: Icon(Icons.arrow_back_outlined),
         ),
@@ -27,10 +38,10 @@ class buyandaddpage extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Image.network(product["image_url"]),
+            Image.network(widget.product["image_url"]),
             SizedBox(height: 10),
             Text(
-              "Price: ${product["price"]}",
+              "Price: ${widget.product["price"]}",
               style: TextStyle(
                 fontSize: 20,
                 fontWeight: FontWeight.bold,
@@ -39,7 +50,7 @@ class buyandaddpage extends StatelessWidget {
             ),
             SizedBox(height: 10),
             Text(
-              product["description"],
+              widget.product["description"],
               style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
             ),
           ],
@@ -59,22 +70,6 @@ class buyandaddpage extends StatelessWidget {
                     splashColor: Colors.white,
                     borderRadius: BorderRadius.circular(50),
                     onTap: () {},
-                    child: Icon(Icons.storefront_outlined),
-                  ),
-                ),
-                Text("Store"),
-              ],
-            ),
-            SizedBox(width: 15),
-            Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Material(
-                  shadowColor: Colors.black,
-                  child: InkWell(
-                    splashColor: Colors.white,
-                    borderRadius: BorderRadius.circular(50),
-                    onTap: () {},
                     child: Icon(Icons.add_shopping_cart_outlined),
                   ),
                 ),
@@ -84,7 +79,9 @@ class buyandaddpage extends StatelessWidget {
             SizedBox(width: 15),
             Expanded(
               child: ElevatedButton(
-                onPressed: () {},
+                onPressed: () {
+                  addtocart();
+                },
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Colors.green,
                   foregroundColor: Colors.white,
@@ -95,7 +92,14 @@ class buyandaddpage extends StatelessWidget {
             SizedBox(width: 15),
             Expanded(
               child: ElevatedButton(
-                onPressed: () {},
+                onPressed: () {
+                  Get.offAll(
+                    PaymentMethod(
+                      product: widget.product,
+                      username: widget.username,
+                    ),
+                  );
+                },
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Colors.amber,
                   foregroundColor: Colors.white,
@@ -107,5 +111,33 @@ class buyandaddpage extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  Future<void> addtocart() async {
+    var url = Uri.parse('http://192.168.1.119/flutter/api/add_to_cart.php');
+    try {
+      var response = await http.post(
+        url,
+        body: {
+          "product_id": widget.product["id"].toString(),
+          "username": widget.username,
+          "name": widget.product["name"],
+          "price": widget.product["price"].toString(),
+          "image_url": widget.product["image_url"],
+        },
+      );
+      print('Response: ${response.body}');
+      if (response.statusCode == 200) {
+        Get.snackbar(
+          "Success",
+          "Product added to cart successfully",
+          snackPosition: SnackPosition.BOTTOM,
+          backgroundColor: Colors.green,
+          colorText: Colors.white,
+        );
+      }
+    } catch (e) {
+      print("Error: $e");
+    }
   }
 }

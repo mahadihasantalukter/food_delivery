@@ -1,9 +1,7 @@
 import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:food_delivery/pages/user%20pages/Bottom%20pages/page/buy_and%20_add_page.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
 import 'package:http/http.dart' as http;
 
 class BottomHomepage extends StatefulWidget {
@@ -22,7 +20,11 @@ class _BottomHomepageState extends State<BottomHomepage> {
         future: fetchproducts(),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
-            return const Center(child: CircularProgressIndicator());
+            return const Center(
+              child: CircularProgressIndicator(
+                color: Color.fromARGB(255, 5, 215, 243),
+              ),
+            );
           } else if (snapshot.hasError) {
             return Center(child: Text(snapshot.error.toString()));
           } else {
@@ -30,10 +32,11 @@ class _BottomHomepageState extends State<BottomHomepage> {
               padding: const EdgeInsets.all(10),
               gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                 crossAxisCount: 2,
-                crossAxisSpacing: 10,
-                mainAxisSpacing: 10,
+                crossAxisSpacing: 1,
+                mainAxisSpacing: 1,
                 childAspectRatio: 0.75,
               ),
+
               itemCount: snapshot.data!.length,
               itemBuilder: (context, index) {
                 var product = snapshot.data![index];
@@ -120,7 +123,7 @@ class _BottomHomepageState extends State<BottomHomepage> {
   }
 
   Future<List<dynamic>> fetchproducts() async {
-    final String url = "http://192.168.1.113/flutter/api/uploads.php";
+    final String url = "http://192.168.1.119/flutter/api/uploads.php";
     try {
       final response = await http.get(Uri.parse(url));
       if (response.statusCode == 200) {
