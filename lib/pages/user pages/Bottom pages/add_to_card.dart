@@ -22,8 +22,6 @@ class _AddToCardState extends State<AddToCard> {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return const Center(
               child: CircularProgressIndicator(
-                value: 0.5,
-                strokeWidth: 100,
                 color: Color.fromARGB(255, 5, 215, 243),
               ),
             );
@@ -34,9 +32,56 @@ class _AddToCardState extends State<AddToCard> {
               itemCount: snapshot.data!.length,
               itemBuilder: (context, index) {
                 var product = snapshot.data![index];
-                return ListTile(
-                  title: Text(product['name']),
-                  subtitle: Text(product['price'].toString()),
+                return Card(
+                  margin: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                  elevation: 1,
+                  shadowColor: Colors.blue,
+
+                  child: Padding(
+                    padding: EdgeInsets.all(10.0),
+                    child: Row(
+                      children: [
+                        Container(
+                          width: 60,
+                          height: 80,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(7),
+                            image: DecorationImage(
+                              image: NetworkImage(product['image']),
+                              fit: BoxFit.cover,
+                            ),
+                          ),
+                        ),
+                        SizedBox(width: 15),
+                        Expanded(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              SizedBox(height: 5),
+                              Text(
+                                "Name ${product['name']}",
+                                style: const TextStyle(
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                              Text(
+                                "Price: ৳${product['price']}",
+                                style: const TextStyle(color: Colors.red),
+                              ),
+                            ],
+                          ),
+                        ),
+                        IconButton(
+                          onPressed: () {},
+                          icon: Icon(
+                            Icons.delete_forever_outlined,
+                            color: Colors.black,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
                 );
               },
             );
