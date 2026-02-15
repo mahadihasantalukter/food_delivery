@@ -50,7 +50,7 @@ class _BottomHomepageState extends State<BottomHomepage> {
                     );
                   },
                   child: Card(
-                    elevation: 1,
+                    elevation: 8,
                     shadowColor: const Color.fromARGB(249, 8, 176, 218),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(15),
@@ -61,7 +61,7 @@ class _BottomHomepageState extends State<BottomHomepage> {
                         Expanded(
                           child: ClipRRect(
                             borderRadius: BorderRadius.vertical(
-                              top: Radius.circular(15),
+                              top: Radius.circular(10),
                             ),
                             child: Image.network(
                               product['image_url'],
@@ -71,7 +71,7 @@ class _BottomHomepageState extends State<BottomHomepage> {
                                   (context, error, stackTrace) => const Center(
                                     child: Icon(
                                       Icons.fastfood_outlined,
-                                      size: 50,
+                                      size: 30,
                                       color: Colors.grey,
                                     ),
                                   ),
@@ -123,7 +123,7 @@ class _BottomHomepageState extends State<BottomHomepage> {
   }
 
   Future<List<dynamic>> fetchproducts() async {
-    final String url = "http://192.168.1.119/flutter/api/uploads.php";
+    final String url = "http://192.168.0.108/flutter/api/uploads.php";
     try {
       final response = await http.get(Uri.parse(url));
       if (response.statusCode == 200) {

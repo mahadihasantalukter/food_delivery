@@ -17,7 +17,7 @@ class _PaymentMethodState extends State<PaymentMethod> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: AppBar(
+      appBar: AppBar(
         centerTitle: true,
         title: Text(
           "Payment Method",
@@ -29,9 +29,7 @@ class _PaymentMethodState extends State<PaymentMethod> {
         ),
         leading: IconButton(
           onPressed: () {
-            Get.offAll(
-              buyandaddpage(username: widget.username, product: widget.product),
-            );
+            Get.back();
           },
           icon: Icon(Icons.arrow_back_outlined),
         ),

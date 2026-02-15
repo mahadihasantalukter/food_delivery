@@ -93,10 +93,10 @@ class _buyandaddpageState extends State<buyandaddpage> {
             Expanded(
               child: ElevatedButton(
                 onPressed: () {
-                  Get.offAll(
-                    PaymentMethod(
-                      product: widget.product,
+                  Get.to(
+                    () => PaymentMethod(
                       username: widget.username,
+                      product: widget.product,
                     ),
                   );
                 },
@@ -114,7 +114,7 @@ class _buyandaddpageState extends State<buyandaddpage> {
   }
 
   Future<void> addtocart() async {
-    var url = Uri.parse('http://192.168.1.119/flutter/api/add_to_cart.php');
+    var url = Uri.parse('http://192.168.0.108/flutter/api/add_to_cart.php');
     try {
       var response = await http.post(
         url,
